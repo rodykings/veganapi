@@ -6,5 +6,9 @@ Vegan API
 - Run mongodb locally
 - Run Vegan Api:
 
-```npm start```
+```
+npm install
+
+npm start
+```
 
