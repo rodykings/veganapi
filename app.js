@@ -5,15 +5,18 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var recipesRouter = require('./routes/recipes');
+var productsRouter = require('./routes/products');
+var imagesRouter = require('./routes/images');
+var cartRouter = require('./routes/cart');
 
 const cors = require('cors')
 
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/veganapi',{
+mongoose.connect('mongodb://localhost:27017/malteapi',{
     useNewUrlParser:true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 }).then(()=>{
     console.log('Connection ok!');
 }).catch(()=>{
@@ -31,9 +34,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 const verifyAccessToken = require('./routes/middleware/verifyAcessTokenMiddleware');
 
-
-app.use('/', verifyAccessToken, indexRouter);
+app.use('/products', productsRouter);
+app.use('/cart', cartRouter);
+app.use('/images', imagesRouter);
+/*app.use('/', verifyAccessToken, indexRouter);*/
 app.use('/users', usersRouter);
-app.use('/recipes', recipesRouter);
+
 
 module.exports = app;
